@@ -8,6 +8,7 @@ header('Content-Type: application/json');
 
 $router = new Router();
 
+// Artists routes
 $router->get('/artists', [new ArtistController(), 'getAll']);
 $router->get('/artists/{artist_id}', [new ArtistController(), 'getOne']);
 $router->post('/artists', [new ArtistController(), 'create']);
