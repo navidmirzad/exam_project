@@ -1,0 +1,48 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore PHP session files
+sess_*
+
+# Ignore compiled PHP files
+*.phar
+*.php~
+
+# Ignore Composer files
+/vendor/
+/composer.lock
+
+# Ignore environment configuration files
+.env
+.env.local
+.env.*.local
+
+# Ignore IDE/editor folders and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore XAMPP specific folders
+xampp/tmp/
+xampp/logs/
+
+# Ignore Apache logs and cache
+logs/
+cache/
+
+# Ignore OS-specific files
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Ignore node_modules if using Node tooling
+node_modules/
+
+# Ignore build artifacts (if any)
+dist/
+build/
