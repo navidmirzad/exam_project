@@ -10,6 +10,7 @@ $router = new Router();
 
 // Artists routes
 $router->get('/artists', [new ArtistController(), 'getAll']);
+$router->get('/artists/{name}', [new ArtistController(), 'search']);
 $router->get('/artists/{artist_id}', [new ArtistController(), 'getOne']);
 $router->post('/artists', [new ArtistController(), 'create']);
 $router->delete('/artists/{artist_id}', [new ArtistController(), 'delete']);

@@ -23,6 +23,14 @@ class Artist extends Database
         return $stmt->fetchAll();
     }
 
+    public function getByName(string $name): ?array 
+    {
+        $stmt = $this->connect->prepare("SELECT * FROM artist WHERE Name = :name");
+        $stmt->execute([':name' => $name]);
+        $artist = $stmt->fetch();
+        return $artist ?: null;
+    }
+
     public function getById(int $id): ?array
     {
         $stmt = $this->connect->prepare("SELECT * FROM artist WHERE ArtistId = :id");

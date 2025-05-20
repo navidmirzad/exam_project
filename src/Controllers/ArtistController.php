@@ -25,6 +25,26 @@ class ArtistController
         }
     }
 
+    // GET /artists/{name}
+    public function search(string $name)
+    {
+        if (!$name && !(string)$name) {
+            $this->sendError('Invalid artist name', 400);
+            return;
+        }
+        try {
+            $artist = $this->artistModel->getByName($name);
+            if (!$artist) {
+                $this->sendError('Artist not found', 404);
+                return;
+            }
+            http_response_code(200);
+            echo json_encode($artist);
+        } catch (\Exception $e) {
+            $this->sendError($e->getMessage(), 500);
+        }
+    }
+
     // GET /artists/{artist_id}
     public function getOne(int $artist_id) {
         $id = (int)$artist_id;
