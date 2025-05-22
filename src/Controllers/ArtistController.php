@@ -46,7 +46,7 @@ class ArtistController
     }
 
     // GET /artists/{artist_id}
-    public function getOne(int $artist_id) {
+    public function getById(int $artist_id) {
         $id = (int)$artist_id;
         if (!$id) {
             $this->sendError('Invalid artist ID', 400);
@@ -66,12 +66,13 @@ class ArtistController
     }
 
     // POST /artists with JSON body { "name": "Artist Name" }
-    public function create(string $name)
+    public function create(array $input)
     {
-        if (empty($name)) {
+        if (!isset($input['name']) || empty($input['name'])) {
             $this->sendError('Artist name is required', 400);
             return;
         }
+        $name = $input['name'];
         try {
             $newId = $this->artistModel->create($name);
             http_response_code(201);

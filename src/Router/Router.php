@@ -17,6 +17,10 @@ class Router {
         $this->addRoute('DELETE', $path, $callback);
     }
 
+    public function put($path, $callback) {
+        $this->addRoute('PUT', $path, $callback);
+    }
+
     private function addRoute($method, $path, $callback) {
         $this->routes[] = [
             'method' => $method,
@@ -59,15 +63,11 @@ class Router {
             }
 
             if ($matched) {
-                // Special handling for POST with JSON input
-                if ($method === 'POST' && trim($route['path'], '/') === trim($path, '/')) {
+                // Special handling for POST and PUT with JSON input
+                if ($method === 'POST' || $method === 'PUT') {
                     $input = json_decode(file_get_contents('php://input'), true);
-                    if (!isset($input['name'])) {
-                        http_response_code(400);
-                        echo json_encode(['error' => 'Missing name field']);
-                        return;
-                    }
-                    return call_user_func_array($route['callback'], [$input['name']]);
+                    // Append input array as last argument
+                    return call_user_func_array($route['callback'], array_merge($params, [$input]));
                 }
 
                 return call_user_func_array($route['callback'], $params);
