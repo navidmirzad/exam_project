@@ -3,14 +3,24 @@ require_once 'src/Router/Router.php';
 require_once 'src/Controllers/ArtistController.php';
 require_once 'src/Controllers/AlbumController.php';
 require_once 'src/Controllers/TrackController.php';
+require_once 'src/Controllers/MediaTypeController.php';
+require_once 'src/Controllers/GenreController.php';
+require_once 'src/Controllers/PlaylistController.php';
+require_once 'src/Logger/RequestLogger.php';
 
 
 use src\Controllers\AlbumController;
 use src\Router\Router;
 use src\Controllers\ArtistController;
 use src\Controllers\TrackController;
+use src\Controllers\MediaTypeController;
+use src\Controllers\GenreController;
+use src\Controllers\PlaylistController;
+use src\Logger\RequestLogger;
 
 header('Content-Type: application/json');
+
+RequestLogger::log();
 
 $router = new Router();
 
@@ -37,19 +47,20 @@ $router->get('/tracks/{track_id}', [new TrackController(), 'getById']);
 $router->get('/tracks/composer/{composer}', [new TrackController(), 'getByComposer']);
 $router->post('/tracks', [new TrackController(), 'create']);
 $router->put('/tracks/{track_id}', [new TrackController(), 'update']);
-// to check
 $router->delete('/tracks/{track_id}', [new TrackController(), 'delete']);
 
-// to check
+// MediaTypes and Genres routes
+$router->get('/media-types', [new MediaTypeController(), 'getAll']);
+$router->get('/genres', [new GenreController(), 'getAll']);
 
-/* 
-GET 	tracks?s=<search_text>	 	Retrieves tracks whose name includes the search text, including their media types and genres
-GET	tracks/<track_id>	 	Retrieves one track, including its media type and genre
-GET	tracks?composer=<composer>	 	Retrieves tracks by a specific composer
-POST	tracks	name, album_id, media_type_id, genre_id, composer, milliseconds, bytes, unit_price	Creates a track
-PUT	tracks/<track_id>	name?, album_id?, media_type_id?, genre_id?, composer?, milliseconds?, bytes?, unit_price?	Edits track information
-DELETE	tracks/<track_id>	 	Deletes a track, only if it does not belong to a playlist
-*/
+// Playlist routes
+$router->get('/playlists', [new PlaylistController(), 'getAll']);
+$router->get('/playlists/search/{name}', [new PlaylistController(), 'search']);
+$router->get('/playlists/{playlist_id}', [new PlaylistController(), 'getById']);
+$router->post('/playlists', [new PlaylistController(), 'create']);
+$router->post('/playlists/{playlist_id}/tracks', [new PlaylistController(), 'addTrack']);
+$router->delete('/playlists/{playlist_id}/tracks/{track_id}', [new PlaylistController(), 'removeTrack']);
+$router->delete('/playlists/{playlist_id}', [new PlaylistController(), 'delete']);
 
 
 $router->run();
