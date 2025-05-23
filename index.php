@@ -32,10 +32,12 @@ $router->delete('/albums/{album_id}', [new AlbumController(), 'delete']);
 
 // Tracks routes
 // search for: name, media type & genre
-$router->get('/tracks/{search}', [new TrackController(), 'search']); 
+$router->get('/tracks/search/{search}', [new TrackController(), 'search']); 
 $router->get('/tracks/{track_id}', [new TrackController(), 'getById']);
+$router->get('/tracks/composer/{composer}', [new TrackController(), 'getByComposer']);
 $router->post('/tracks', [new TrackController(), 'create']);
 $router->put('/tracks/{track_id}', [new TrackController(), 'update']);
+// to check
 $router->delete('/tracks/{track_id}', [new TrackController(), 'delete']);
 
 // to check
