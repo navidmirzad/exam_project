@@ -2,7 +2,7 @@
 
 ## Overview
 
-This RESTful API allows you to manage artists, albums, tracks, media types, genres, and playlists. All responses are in JSON. Use the endpoints below with tools like Postman or curl.
+RestAPI's on Chinook_MySql_AutoIncrementPK.sql that lets you manage artists, albums, tracks, media types, genres, and playlists. All responses are in JSON. Use the endpoints below with tools like Postman or curl.
 
 ---
 
