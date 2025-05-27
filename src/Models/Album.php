@@ -19,10 +19,10 @@ class Album extends Database
     public function getAll(): array
     {
         $stmt = $this->connect->query
-        ("SELECT album.AlbumId, album.Title, artist.ArtistId, artist.Name AS ArtistName
-            FROM album
-            JOIN artist ON album.ArtistId = artist.ArtistId
-            ORDER BY album.Title");
+        ("SELECT Album.AlbumId, Album.Title, Artist.ArtistId, Artist.Name AS ArtistName
+            FROM Album
+            JOIN Artist ON Album.ArtistId = Artist.ArtistId
+            ORDER BY Album.Title");
         return $stmt->fetchAll();
     }
 
