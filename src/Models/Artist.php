@@ -19,13 +19,13 @@ class Artist extends Database
 
     public function getAll(): array
     { 
-        $stmt = $this->connect->query("SELECT * FROM artist ORDER BY Name");
+        $stmt = $this->connect->query("SELECT * FROM Artist ORDER BY Name");
         return $stmt->fetchAll();
     }
 
     public function getByName(string $name): ?array 
     {
-        $stmt = $this->connect->prepare("SELECT * FROM artist WHERE Name = :name");
+        $stmt = $this->connect->prepare("SELECT * FROM Artist WHERE Name = :name");
         $stmt->execute([':name' => $name]);
         $artist = $stmt->fetch();
         return $artist ?: null;
@@ -33,7 +33,7 @@ class Artist extends Database
 
     public function getById(int $id): ?array
     {
-        $stmt = $this->connect->prepare("SELECT * FROM artist WHERE ArtistId = :id");
+        $stmt = $this->connect->prepare("SELECT * FROM Artist WHERE ArtistId = :id");
         $stmt->execute([':id' => $id]);
         $artist = $stmt->fetch();
         return $artist ?: null;
@@ -50,7 +50,7 @@ class Artist extends Database
     // Check if artist has albums
     public function hasAlbums(int $artistId): bool
     {
-        $stmt = $this->connect->prepare("SELECT 1 FROM album WHERE ArtistId = :artistId LIMIT 1");
+        $stmt = $this->connect->prepare("SELECT 1 FROM Album WHERE ArtistId = :artistId LIMIT 1");
         $stmt->execute([':artistId' => $artistId]);
         return (bool) $stmt->fetchColumn();
     }
@@ -58,7 +58,7 @@ class Artist extends Database
     // Delete artist by ID
     public function delete(int $id): bool
     {
-        $stmt = $this->connect->prepare("DELETE FROM artist WHERE ArtistId = :id");
+        $stmt = $this->connect->prepare("DELETE FROM Artist WHERE ArtistId = :id");
         return $stmt->execute([':id' => $id]);
     }
 }

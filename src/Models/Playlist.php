@@ -18,21 +18,21 @@ class Playlist extends Database
 
     public function getAll()
     {
-        $stmt = $this->connect->prepare("SELECT * FROM playlist");
+        $stmt = $this->connect->prepare("SELECT * FROM Playlist");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function search(string $name)
     {
-        $stmt = $this->connect->prepare("SELECT * FROM playlist WHERE Name LIKE :name");
+        $stmt = $this->connect->prepare("SELECT * FROM Playlist WHERE Name LIKE :name");
         $stmt->execute([':name' => "%$name%"]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getById(int $id)
     {
-        $stmt = $this->connect->prepare("SELECT * FROM playlist WHERE PlaylistId = :id");
+        $stmt = $this->connect->prepare("SELECT * FROM Playlist WHERE PlaylistId = :id");
         $stmt->execute([':id' => $id]);
         $playlist = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$playlist) {
@@ -43,8 +43,8 @@ class Playlist extends Database
         $stmt = $this->connect->prepare("
             SELECT 
                 t.TrackId, t.Name, t.AlbumId, t.MediaTypeId, t.GenreId, t.Composer, t.Milliseconds, t.Bytes, t.UnitPrice
-            FROM playlisttrack pt
-            JOIN track t ON pt.TrackId = t.TrackId
+            FROM PlaylistTrack pt
+            JOIN Track t ON pt.TrackId = t.TrackId
             WHERE pt.PlaylistId = :id
         ");
         $stmt->execute([':id' => $id]);
@@ -56,7 +56,7 @@ class Playlist extends Database
 
     public function create(string $name)
     {
-        $stmt = $this->connect->prepare("INSERT INTO playlist (Name) VALUES (:name)");
+        $stmt = $this->connect->prepare("INSERT INTO Playlist (Name) VALUES (:name)");
         $stmt->execute([':name' => $name]);
         return $this->connect->lastInsertId();
     }
@@ -64,32 +64,32 @@ class Playlist extends Database
     public function addTrack(int $playlist_id, int $track_id)
     {
         // Prevent duplicate assignment
-        $stmt = $this->connect->prepare("SELECT 1 FROM playlisttrack WHERE PlaylistId = :playlist_id AND TrackId = :track_id");
+        $stmt = $this->connect->prepare("SELECT 1 FROM PlaylistTrack WHERE PlaylistId = :playlist_id AND TrackId = :track_id");
         $stmt->execute([':playlist_id' => $playlist_id, ':track_id' => $track_id]);
         if ($stmt->fetch()) {
             return false; // Already assigned
         }
-        $stmt = $this->connect->prepare("INSERT INTO playlisttrack (PlaylistId, TrackId) VALUES (:playlist_id, :track_id)");
+        $stmt = $this->connect->prepare("INSERT INTO PlaylistTrack (PlaylistId, TrackId) VALUES (:playlist_id, :track_id)");
         return $stmt->execute([':playlist_id' => $playlist_id, ':track_id' => $track_id]);
     }
 
     public function removeTrack(int $playlist_id, int $track_id)
     {
-        $stmt = $this->connect->prepare("DELETE FROM playlisttrack WHERE PlaylistId = :playlist_id AND TrackId = :track_id");
+        $stmt = $this->connect->prepare("DELETE FROM PlaylistTrack WHERE PlaylistId = :playlist_id AND TrackId = :track_id");
         return $stmt->execute([':playlist_id' => $playlist_id, ':track_id' => $track_id]);
     }
 
     public function delete(int $playlist_id)
     {
         // Check if playlist has any tracks
-        $stmt = $this->connect->prepare("SELECT 1 FROM playlisttrack WHERE PlaylistId = :playlist_id LIMIT 1");
+        $stmt = $this->connect->prepare("SELECT 1 FROM PlaylistTrack WHERE PlaylistId = :playlist_id LIMIT 1");
         $stmt->execute([':playlist_id' => $playlist_id]);
         if ($stmt->fetch()) {
             // Playlist has tracks, do not delete
             return false;
         }
         // Safe to delete
-        $stmt = $this->connect->prepare("DELETE FROM playlist WHERE PlaylistId = :playlist_id");
+        $stmt = $this->connect->prepare("DELETE FROM Playlist WHERE PlaylistId = :playlist_id");
         return $stmt->execute([':playlist_id' => $playlist_id]);
     }
 }

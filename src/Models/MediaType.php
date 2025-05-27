@@ -18,7 +18,7 @@ class MediaType extends Database
 
     public function getAll()
     {
-        $stmt = $this->connect->prepare("SELECT * FROM mediatype");
+        $stmt = $this->connect->prepare("SELECT * FROM MediaType");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

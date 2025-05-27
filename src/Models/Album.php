@@ -26,10 +26,9 @@ class Album extends Database
         return $stmt->fetchAll();
     }
 
-
     public function getById(int $id): ?array
     {
-        $stmt = $this->connect->prepare("SELECT * FROM album WHERE AlbumId = :id");
+        $stmt = $this->connect->prepare("SELECT * FROM Album WHERE AlbumId = :id");
         $stmt->execute([':id' => $id]);
         $album = $stmt->fetch();
         return $album ?: null;
@@ -38,11 +37,11 @@ class Album extends Database
     public function getByTitle(string $title): array
     {
         $stmt = $this->connect->prepare("
-        SELECT album.AlbumId, album.Title, artist.ArtistId, artist.Name AS ArtistName
-        FROM album
-        JOIN artist ON album.ArtistId = artist.ArtistId
-        WHERE album.Title LIKE :title
-        ORDER BY album.Title");
+        SELECT Album.AlbumId, Album.Title, Artist.ArtistId, Artist.Name AS ArtistName
+        FROM Album
+        JOIN Artist ON Album.ArtistId = Artist.ArtistId
+        WHERE Album.Title LIKE :title
+        ORDER BY Album.Title");
         $stmt->execute([':title' => "%$title%"]);
         return $stmt->fetchAll();
     }
@@ -51,23 +50,23 @@ class Album extends Database
     {
         $stmt = $this->connect->prepare("
             SELECT 
-                album.AlbumId, 
-                album.Title, 
-                artist.ArtistId, 
-                artist.Name AS ArtistName, 
-                track.TrackId, 
-                track.Name AS TrackName,
-                mediatype.MediaTypeId,
-                mediatype.Name AS MediaTypeName,
-                genre.GenreId,
-                genre.Name AS GenreName
-            FROM album
-            JOIN artist ON album.ArtistId = artist.ArtistId
-            LEFT JOIN track ON album.AlbumId = track.AlbumId
-            LEFT JOIN mediatype ON track.MediaTypeId = mediatype.MediaTypeId
-            LEFT JOIN genre ON track.GenreId = genre.GenreId
-            WHERE album.AlbumId = :albumId
-            ORDER BY track.TrackId
+                Album.AlbumId, 
+                Album.Title, 
+                Artist.ArtistId, 
+                Artist.Name AS ArtistName, 
+                Track.TrackId, 
+                Track.Name AS TrackName,
+                MediaType.MediaTypeId,
+                MediaType.Name AS MediaTypeName,
+                Genre.GenreId,
+                Genre.Name AS GenreName
+            FROM Album
+            JOIN Artist ON Album.ArtistId = Artist.ArtistId
+            LEFT JOIN Track ON Album.AlbumId = Track.AlbumId
+            LEFT JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId
+            LEFT JOIN Genre ON Track.GenreId = Genre.GenreId
+            WHERE Album.AlbumId = :albumId
+            ORDER BY Track.TrackId
         ");
         $stmt->execute([':albumId' => $albumId]);
         return $stmt->fetchAll();
@@ -75,7 +74,7 @@ class Album extends Database
 
     public function create(string $title, int $artistId): int
     {
-        $stmt = $this->connect->prepare("INSERT INTO album (Title, ArtistId) VALUES (:title, :artistId)");
+        $stmt = $this->connect->prepare("INSERT INTO Album (Title, ArtistId) VALUES (:title, :artistId)");
         $stmt->execute([
             ':title' => $title,
             ':artistId' => $artistId
@@ -85,7 +84,7 @@ class Album extends Database
 
     public function update(int $albumId, string $title, int $artistId): bool
     {
-        $stmt = $this->connect->prepare("UPDATE album SET Title = :title, ArtistId = :artistId WHERE AlbumId = :albumId");
+        $stmt = $this->connect->prepare("UPDATE Album SET Title = :title, ArtistId = :artistId WHERE AlbumId = :albumId");
         return $stmt->execute([
             ':title' => $title,
             ':artistId' => $artistId,
@@ -95,14 +94,14 @@ class Album extends Database
 
     public function hasTracks(int $albumId): bool
     {
-        $stmt = $this->connect->prepare("SELECT 1 FROM track WHERE AlbumId = :albumId LIMIT 1");
+        $stmt = $this->connect->prepare("SELECT 1 FROM Track WHERE AlbumId = :albumId LIMIT 1");
         $stmt->execute([':albumId' => $albumId]);
         return (bool) $stmt->fetchColumn();
     }
 
     public function delete(int $albumId): bool
     {
-        $stmt = $this->connect->prepare("DELETE FROM album WHERE AlbumId = :albumId");
+        $stmt = $this->connect->prepare("DELETE FROM Album WHERE AlbumId = :albumId");
         return $stmt->execute([':albumId' => $albumId]);
     }
 }

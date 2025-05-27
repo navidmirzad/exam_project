@@ -18,7 +18,7 @@ class Genre extends Database
 
     public function getAll()
     {
-        $stmt = $this->connect->prepare("SELECT * FROM genre");
+        $stmt = $this->connect->prepare("SELECT * FROM Genre");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
