@@ -42,7 +42,7 @@ class Artist extends Database
     // Create artist
     public function create(string $name): int
     {
-        $stmt = $this->connect->prepare("INSERT INTO artist (Name) VALUES (:name)");
+        $stmt = $this->connect->prepare("INSERT INTO Artist (Name) VALUES (:name)");
         $stmt->execute([':name' => $name]);
         return (int)$this->connect->lastInsertId();
     }
