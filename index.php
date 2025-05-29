@@ -53,7 +53,6 @@ $router->get('/genres', [new GenreController(), 'getAll']);
 
 // Playlist routes
 $router->get('/playlists', [new PlaylistController(), 'getAll']);
-//$router->get('/playlists/search/{name}', [new PlaylistController(), 'search']);
 $router->get('/playlists/{playlist_id}', [new PlaylistController(), 'getById']);
 $router->post('/playlists', [new PlaylistController(), 'create']);
 $router->post('/playlists/{playlist_id}/tracks', [new PlaylistController(), 'addTrack']);
