@@ -21,6 +21,8 @@ class AlbumController
             if (isset($_GET['s']) && strlen(trim($_GET['s'])) > 0) {
                 $searchText = trim($_GET['s']);
                 $albums = $this->albumModel->getByTitle($searchText);
+                http_response_code(200);
+                echo json_encode($albums);
             } else {
                 $albums = $this->albumModel->getAll();
                 http_response_code(200);
