@@ -16,9 +16,16 @@ class PlaylistController
     public function getAll()
     {
         try {
-            $playlists = $this->playlistModel->getAll();
-            http_response_code(200);
-            echo json_encode($playlists);
+            if (isset($_GET['s']) && strlen(trim($_GET['s'])) > 0) {
+                $searchText = trim($_GET['s']);
+                $playlists = $this->playlistModel->search($searchText);
+                http_response_code(200);
+                echo json_encode($playlists);
+            } else {
+                $playlists = $this->playlistModel->getAll();
+                http_response_code(200);
+                echo json_encode($playlists);
+            }
         } catch (\Exception $e) {
             $this->sendError($e->getMessage(), 500);
         }

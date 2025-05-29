@@ -32,7 +32,6 @@ $router->delete('/artists/{artist_id}', [new ArtistController(), 'delete']);
 
 // Album routes
 $router->get('/albums', [new AlbumController(), 'getAll']);
-//$router->get('/albums/search/{title}', [new AlbumController(), 'search']);
 $router->get('/albums/{album_id}', [new AlbumController(), 'getById']);
 $router->get('/albums/{album_id}/tracks', [new AlbumController(), 'getAlbumAndTracks']);
 $router->post('/albums', [new AlbumController(), 'create']);
@@ -41,7 +40,7 @@ $router->delete('/albums/{album_id}', [new AlbumController(), 'delete']);
 
 // Tracks routes
 // search for: name, media type & genre
-$router->get('/tracks/search/{search}', [new TrackController(), 'search']); 
+$router->get('/tracks', [new TrackController(), 'search']); 
 $router->get('/tracks/{track_id}', [new TrackController(), 'getById']);
 $router->get('/tracks/composer/{composer}', [new TrackController(), 'getByComposer']);
 $router->post('/tracks', [new TrackController(), 'create']);
@@ -54,7 +53,7 @@ $router->get('/genres', [new GenreController(), 'getAll']);
 
 // Playlist routes
 $router->get('/playlists', [new PlaylistController(), 'getAll']);
-$router->get('/playlists/search/{name}', [new PlaylistController(), 'search']);
+//$router->get('/playlists/search/{name}', [new PlaylistController(), 'search']);
 $router->get('/playlists/{playlist_id}', [new PlaylistController(), 'getById']);
 $router->post('/playlists', [new PlaylistController(), 'create']);
 $router->post('/playlists/{playlist_id}/tracks', [new PlaylistController(), 'addTrack']);
