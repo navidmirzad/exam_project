@@ -2,17 +2,14 @@
 
 ## Overview
 
-RestAPI's on Chinook_MySql_AutoIncrementPK.sql that lets you manage artists, albums, tracks, media types, genres, and playlists. All responses are in JSON. Use the endpoints below with tools like Postman or curl.
+REST APIs for the Chinook_MySql_AutoIncrementPK.sql database. Manage artists, albums, tracks, media types, genres, and playlists. All responses are in JSON. Use the endpoints below with tools like Postman or curl.
 
 ---
 
 ## Artists
 
 - **GET /artists**  
-  Get all artists.
-
-- **GET /artists/search/{name}**  
-  Search for an artist by name.
+  Get all artists, or search by name using `?s=...` query parameter.
 
 - **GET /artists/{artist_id}**  
   Get artist by ID.
@@ -32,10 +29,7 @@ RestAPI's on Chinook_MySql_AutoIncrementPK.sql that lets you manage artists, alb
 ## Albums
 
 - **GET /albums**  
-  Get all albums.
-
-- **GET /albums/search/{title}**  
-  Search albums by title.
+  Get all albums, or search by title using `?s=...` query parameter.
 
 - **GET /albums/{album_id}**  
   Get album by ID.
@@ -64,8 +58,8 @@ RestAPI's on Chinook_MySql_AutoIncrementPK.sql that lets you manage artists, alb
 
 ## Tracks
 
-- **GET /tracks/search/{search}**  
-  Search tracks by name.
+- **GET /tracks**  
+  Get all tracks, or search by name, media type, or genre using `?s=...` query parameter.
 
 - **GET /tracks/{track_id}**  
   Get track by ID.
@@ -122,10 +116,7 @@ RestAPI's on Chinook_MySql_AutoIncrementPK.sql that lets you manage artists, alb
 ## Playlists
 
 - **GET /playlists**  
-  Get all playlists.
-
-- **GET /playlists/search/{name}**  
-  Search playlists by name.
+  Get all playlists, or search by name using `?s=...` query parameter.
 
 - **GET /playlists/{playlist_id}**  
   Get playlist by ID (includes tracks).
