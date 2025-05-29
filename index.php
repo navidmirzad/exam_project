@@ -24,6 +24,10 @@ RequestLogger::log();
 
 $router = new Router();
 
+$router->get('/', function() {
+    echo json_encode(['message' => 'Welcome to my Mandatory II / Exam Project - RestAPIs on Chinook_AutoIncrement Database.']);
+});
+
 // Artists routes
 $router->get('/artists', [new ArtistController(), 'getAll']);
 $router->get('/artists/{artist_id}', [new ArtistController(), 'getById']);
