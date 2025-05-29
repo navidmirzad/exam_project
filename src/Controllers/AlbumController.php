@@ -18,9 +18,14 @@ class AlbumController
     public function getAll()
     {
         try {
-            $albums = $this->albumModel->getAll();
-            http_response_code(200);
-            echo json_encode($albums);
+            if (isset($_GET['s']) && strlen(trim($_GET['s'])) > 0) {
+                $searchText = trim($_GET['s']);
+                $albums = $this->albumModel->getByTitle($searchText);
+            } else {
+                $albums = $this->albumModel->getAll();
+                http_response_code(200);
+                echo json_encode($albums);
+            }
         } catch (\Exception $e) {
             $this->sendError($e->getMessage(), 500);
         }

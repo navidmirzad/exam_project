@@ -20,44 +20,18 @@ class ArtistController
             if (isset($_GET['s']) && strlen(trim($_GET['s'])) > 0) {
                 $searchText = trim($_GET['s']);
                 $artists = $this->artistModel->getByName($searchText);
-                if (empty($artists)) {
-                    http_response_code(404);
-                    echo json_encode(['error' => 'No artists found']);
-                    return;
-                }
                 http_response_code(200);
                 echo json_encode($artists);
                 return;
+            } else {
+                $artists = $this->artistModel->getAll();
+                http_response_code(200);
+                echo json_encode($artists);
             }
-
-            // No search, return all
-            $artists = $this->artistModel->getAll();
-            http_response_code(200);
-            echo json_encode($artists);
         } catch (\Exception $e) {
             $this->sendError($e->getMessage(), 500);
         }
     }
-
-    /* // GET /artists/{name}
-    public function search(string $name)
-    {
-        if (!$name && !(string)$name) {
-            $this->sendError('Invalid artist name', 400);
-            return;
-        }
-        try {
-            $artist = $this->artistModel->getByName($name);
-            if (!$artist) {
-                $this->sendError('Artist not found', 404);
-                return;
-            }
-            http_response_code(200);
-            echo json_encode($artist);
-        } catch (\Exception $e) {
-            $this->sendError($e->getMessage(), 500);
-        }
-    } */
 
     // GET /artists/{artist_id}
     public function getById(int $artist_id) {

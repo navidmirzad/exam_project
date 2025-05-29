@@ -32,7 +32,7 @@ $router->delete('/artists/{artist_id}', [new ArtistController(), 'delete']);
 
 // Album routes
 $router->get('/albums', [new AlbumController(), 'getAll']);
-$router->get('/albums/search/{title}', [new AlbumController(), 'search']);
+//$router->get('/albums/search/{title}', [new AlbumController(), 'search']);
 $router->get('/albums/{album_id}', [new AlbumController(), 'getById']);
 $router->get('/albums/{album_id}/tracks', [new AlbumController(), 'getAlbumAndTracks']);
 $router->post('/albums', [new AlbumController(), 'create']);
