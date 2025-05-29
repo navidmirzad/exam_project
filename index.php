@@ -26,8 +26,6 @@ $router = new Router();
 
 // Artists routes
 $router->get('/artists', [new ArtistController(), 'getAll']);
-// fix the search route to allow searching by name
-$router->get('/artists/search/{name}', [new ArtistController(), 'search']);
 $router->get('/artists/{artist_id}', [new ArtistController(), 'getById']);
 $router->post('/artists', [new ArtistController(), 'create']);
 $router->delete('/artists/{artist_id}', [new ArtistController(), 'delete']);

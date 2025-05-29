@@ -17,6 +17,20 @@ class ArtistController
     public function getAll()
     {
         try {
+            if (isset($_GET['s']) && strlen(trim($_GET['s'])) > 0) {
+                $searchText = trim($_GET['s']);
+                $artists = $this->artistModel->getByName($searchText);
+                if (empty($artists)) {
+                    http_response_code(404);
+                    echo json_encode(['error' => 'No artists found']);
+                    return;
+                }
+                http_response_code(200);
+                echo json_encode($artists);
+                return;
+            }
+
+            // No search, return all
             $artists = $this->artistModel->getAll();
             http_response_code(200);
             echo json_encode($artists);
@@ -25,7 +39,7 @@ class ArtistController
         }
     }
 
-    // GET /artists/{name}
+    /* // GET /artists/{name}
     public function search(string $name)
     {
         if (!$name && !(string)$name) {
@@ -43,7 +57,7 @@ class ArtistController
         } catch (\Exception $e) {
             $this->sendError($e->getMessage(), 500);
         }
-    }
+    } */
 
     // GET /artists/{artist_id}
     public function getById(int $artist_id) {

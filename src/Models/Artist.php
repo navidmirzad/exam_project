@@ -23,12 +23,12 @@ class Artist extends Database
         return $stmt->fetchAll();
     }
 
-    public function getByName(string $name): ?array 
+    // Return all artists whose names match (partial search)
+    public function getByName(string $name): array 
     {
-        $stmt = $this->connect->prepare("SELECT * FROM Artist WHERE Name = :name");
-        $stmt->execute([':name' => $name]);
-        $artist = $stmt->fetch();
-        return $artist ?: null;
+        $stmt = $this->connect->prepare("SELECT * FROM Artist WHERE Name LIKE :name ORDER BY Name");
+        $stmt->execute([':name' => "%$name%"]);
+        return $stmt->fetchAll();
     }
 
     public function getById(int $id): ?array
