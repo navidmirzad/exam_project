@@ -34,16 +34,15 @@ class Router {
     // Adds a route to the $routes array
 
     public function run() {
-        RequestLogger::log(); // Add this line
 
         $method = $_SERVER['REQUEST_METHOD'];
         // Gets the HTTP method (GET, POST, etc.)
 
         $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        // Gets the path from the request URI
+        // Gets the path from the request URI "/artists/{id}"
 
         $basePath = dirname($_SERVER['SCRIPT_NAME']);
-        // Gets the base path of the script
+        // is the Path to the PHP file that was executed
 
         $path = substr($requestUri, strlen($basePath));
         // Removes the base path from the request URI
@@ -54,8 +53,8 @@ class Router {
             }
             // Skip if HTTP method does not match
 
-            $routeParts = explode('/', trim($route['path'], '/'));
-            $pathParts = explode('/', trim($path, '/'));
+            $routeParts = explode('/', trim($route['path'], '/')); // ['artists', {artist_id}];
+            $pathParts = explode('/', trim($path, '/')); // ['artists, 123];
             // Split both route and request path into parts
 
             if (count($routeParts) !== count($pathParts)) {
