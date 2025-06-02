@@ -1,6 +1,8 @@
 <?php
 
 namespace src\Router;
+use src\Logger\RequestLogger; // Add this line
+require_once __DIR__ . '/../Logger/RequestLogger.php'; // Add this line
 
 class Router {
     private $routes = [];
@@ -32,6 +34,8 @@ class Router {
     // Adds a route to the $routes array
 
     public function run() {
+        RequestLogger::log(); // Add this line
+
         $method = $_SERVER['REQUEST_METHOD'];
         // Gets the HTTP method (GET, POST, etc.)
 
