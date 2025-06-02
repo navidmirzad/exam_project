@@ -6,16 +6,17 @@ class RequestLogger
 {
     public static function log()
     {
-        // Set log file path (outside web root for security)
-        $logFile = dirname(__DIR__, 2) . '/logs/request.log';
+        // Absolute log file path
+        $logFile = '/var/www/html/exam_project/request.log';
 
         // Ensure log directory exists
-        if (!is_dir(dirname($logFile))) {
-            mkdir(dirname($logFile), 0775, true);
+        $logDir = dirname($logFile);
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0775, true);
         }
 
         // Capture status code after response is sent
-        register_shutdown_function(function () {
+        register_shutdown_function(function () use ($logFile) {
             $status = http_response_code();
             $logLine = sprintf(
                 "[%s] %s %s %s | Status: %s\n",
@@ -25,8 +26,8 @@ class RequestLogger
                 file_get_contents('php://input'),
                 $status
             );
-            $logFile = '/var/www/html/exam_project/request.log'; // Use absolute path
-            file_put_contents($logFile, $logLine, FILE_APPEND);
+            // Attempt to write to log file, suppress errors if unwritable
+            @file_put_contents($logFile, $logLine, FILE_APPEND);
         });
     }
 }
