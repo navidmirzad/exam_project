@@ -15,7 +15,7 @@ class RequestLogger
         }
 
         // Capture status code after response is sent
-        register_shutdown_function(function () use ($logFile) {
+        register_shutdown_function(function () {
             $status = http_response_code();
             $logLine = sprintf(
                 "[%s] %s %s %s | Status: %s\n",
@@ -25,10 +25,8 @@ class RequestLogger
                 file_get_contents('php://input'),
                 $status
             );
-            // Check if file is writable before writing
-            if (is_writable(dirname($logFile))) {
-                file_put_contents($logFile, $logLine, FILE_APPEND);
-            }
+            $logFile = '/var/www/html/exam_project/request.log'; // Use absolute path
+            file_put_contents($logFile, $logLine, FILE_APPEND);
         });
     }
 }
