@@ -64,6 +64,6 @@ $router->post('/playlists/{playlist_id}/tracks', [new PlaylistController(), 'add
 $router->delete('/playlists/{playlist_id}/tracks/{track_id}', [new PlaylistController(), 'removeTrack']);
 $router->delete('/playlists/{playlist_id}', [new PlaylistController(), 'delete']);
 
-$router->get("/customers", [CustomerController(), 'getAll']);
+$router->get("/customers", [new CustomerController(), 'getAll']);
 
 $router->run();

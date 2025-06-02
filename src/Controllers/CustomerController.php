@@ -4,7 +4,7 @@ namespace src\Controllers;
 use src\Models\Customer;
 require_once 'src/Models/Customer.php';
 
-class CustomerControllers {
+class CustomerController {
 
     private Customer $customer;
 
