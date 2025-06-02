@@ -1,4 +1,5 @@
 <?php
+require_once 'src/Logger/RequestLogger.php';
 require_once 'src/Router/Router.php';
 require_once 'src/Controllers/ArtistController.php';
 require_once 'src/Controllers/AlbumController.php';
@@ -6,7 +7,6 @@ require_once 'src/Controllers/TrackController.php';
 require_once 'src/Controllers/MediaTypeController.php';
 require_once 'src/Controllers/GenreController.php';
 require_once 'src/Controllers/PlaylistController.php';
-require_once 'src/Logger/RequestLogger.php';
 
 use src\Controllers\AlbumController;
 use src\Router\Router;
