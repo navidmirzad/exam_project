@@ -1,7 +1,6 @@
 <?php
 
 namespace src\Router;
-use src\Logger\RequestLogger; // Add this line
 require_once __DIR__ . '/../Logger/RequestLogger.php'; // Add this line
 
 class Router {

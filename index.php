@@ -7,6 +7,7 @@ require_once 'src/Controllers/TrackController.php';
 require_once 'src/Controllers/MediaTypeController.php';
 require_once 'src/Controllers/GenreController.php';
 require_once 'src/Controllers/PlaylistController.php';
+require_once 'src/Controllers/CustomerController.php';
 
 use src\Controllers\AlbumController;
 use src\Router\Router;
@@ -16,6 +17,7 @@ use src\Controllers\MediaTypeController;
 use src\Controllers\GenreController;
 use src\Controllers\PlaylistController;
 use src\Logger\RequestLogger;
+use src\Controllers\CustomerController;
 
 header('Content-Type: application/json');
 
@@ -61,5 +63,7 @@ $router->post('/playlists', [new PlaylistController(), 'create']);
 $router->post('/playlists/{playlist_id}/tracks', [new PlaylistController(), 'addTrack']);
 $router->delete('/playlists/{playlist_id}/tracks/{track_id}', [new PlaylistController(), 'removeTrack']);
 $router->delete('/playlists/{playlist_id}', [new PlaylistController(), 'delete']);
+
+$router->get("/customers", [CustomerController(), 'getAll']);
 
 $router->run();
